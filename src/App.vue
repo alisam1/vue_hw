@@ -51,7 +51,7 @@ export default {
                 search: '',
                 message: null,
                 grid:true,
-                visibility: 'all',
+                select: '',
                 note : {
                     title: '',
                     description: '',
@@ -94,7 +94,7 @@ export default {
   },
    methods: {
                 addNote(){
-                    let {title, description}=this.note
+                    let {title, description, select}=this.note
 
                     if (title === '')
                     {
@@ -105,11 +105,13 @@ export default {
                     this.notes.push({
                         title,
                         description,
-                        date: new Date(Date.now()).toLocaleString()
+                        date: new Date(Date.now()).toLocaleString(),
+                        select
                     })
                     this.note.title = '',
                     this.note.description = '',
                     this.message = null;
+                    this.note.select = ''
                 },
                 removeNote(index){
                     this.notes.splice(index, 1)

@@ -8,6 +8,7 @@
                     </div>
                     <p>{{note.description}}</p>
                     <span>{{note.date}}</span>
+                    <span :class="{green: value == 1, yellow: value == 2, green: value == 3}">{{note.select}}</span>
                 </div>
             </div>
         </div>
@@ -23,6 +24,10 @@ export default {
         },
         grid:{
             type: Boolean,
+            required: true
+        },
+        select:{
+            type: Array,
             required: true
         },
     },
@@ -68,6 +73,11 @@ export default {
     {
         border: green;
     }
+}
+
+.red
+{
+    color: red;
 }
 
 .new-note textarea
