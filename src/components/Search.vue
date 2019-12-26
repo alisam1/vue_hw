@@ -28,7 +28,6 @@ export default {
   },
   watch: {
     search (val) {
-      //console.log(val)
      this.$emit('search', val);
     }
   }
@@ -42,6 +41,7 @@ svg {
 /* Search */
 .wrapper__search {
   position: relative;
+  width: 48%;
 }
 .search {
   top: 0px;

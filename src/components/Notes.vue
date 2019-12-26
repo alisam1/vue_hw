@@ -1,14 +1,30 @@
 <template>
      <div class="notes">
-            <div class="note" :class = "{full: !grid}" v-for="(note, index) in notes" :key="index">
-                <div class="note-header">
+            <div class="note" 
+                 :class="{
+                        'full': !grid,
+                        'greenS': note.select === 'Стандартная',
+                        'yellowS': note.select === 'Важная',
+                        'redS': note.select === 'Очень важная',
+                        }"
+                        v-for="note in notes" :key="note.id">
+                    <div class="note-header">
                     <div class="note-top">
-                    <p>{{note.title}}</p>
-                    <p class="note-remove" @click="removeNote(index)">X</p>
+                        <div @dblclick="editTitleNote(note)">
+                        <div v-show="!note.edit_mode_title">{{ note.title }}</div>
+                        <div v-show="note.edit_mode_title">
+                            <input v-model="note.title" @keyup.enter="saveNoteTitle(note)" type="text" />
+                        </div>
                     </div>
-                    <p>{{note.description}}</p>
+                    <p class="note-remove" @click="removeNote(id)">X</p>
+                    </div>
+                     <div @dblclick="editDescriptionNote(note)">
+                        <div v-show="!note.edit_mode_desc">{{note.description}}</div>
+                        <div v-show="note.edit_mode_desc">
+                            <input v-model="note.description" @keyup.enter="saveNoteDescription(note)" type="text" />
+                        </div>
+                        </div>
                     <span>{{note.date}}</span>
-                    <span :class="{green: value == 1, yellow: value == 2, green: value == 3}">{{note.select}}</span>
                 </div>
             </div>
         </div>
@@ -26,16 +42,28 @@ export default {
             type: Boolean,
             required: true
         },
-        select:{
+        selected:{
             type: Array,
             required: true
-        },
+        }
     },
     methods:{
         removeNote(index){
            console.log(`Note id - ${index} removed`)
            this.$emit('remove', index)
-        }
+        },
+         editTitleNote: function (note) {
+                this.$set(note, 'edit_mode_title', true);
+            },
+        saveNoteTitle: function (note) {
+                note.edit_mode_title = false;
+        },
+        editDescriptionNote: function (note) {
+                this.$set(note, 'edit_mode_desc', true);
+            },
+        saveNoteDescription: function (note) {
+                note.edit_mode_desc = false;
+        },
     }
 }
 </script>
@@ -61,24 +89,28 @@ export default {
     {
         width: 100%;
     }
-    &.all
+    &.greenS
     {
-        border: green;
+        border: 1px solid #1acc61;
     }
-    &.completed
-    {
-        border: green;
-    }
-    &.all
-    {
-        border: green;
-    }
+}
+
+.green 
+{
+    color: green;
+}
+
+.yellow 
+{
+    color: yellow;
 }
 
 .red
 {
     color: red;
 }
+
+
 
 .new-note textarea
 {
@@ -103,6 +135,9 @@ export default {
     h1
     {
         font-size: 32px;
+        text-align: center;
+        margin-bottom: 30px;
+        margin-top: 40px;
     }
 
     p 
@@ -132,10 +167,45 @@ export default {
     }
 }
 
+
+.search-block
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.greenS
+{   
+    border: 2px solid #008000;
+    color: #444;
+    font-weight: 500;
+}
+
+.yellowS
+{
+    border: 2px solid #FFD700;
+    color: #444;
+    font-weight: 500;
+}
+
+
+.redS
+{
+    border: 2px solid #FF0000;
+    color: #444;
+    font-weight: 500;
+}
+
+
+
+
 .note-top
 {
      display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
 </style>
