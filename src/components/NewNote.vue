@@ -4,20 +4,15 @@
             <input v-model ="note.title" type="text">
             <label>Description</label>
             <textarea v-model ="note.description"></textarea>
-            <select 
-                    @change="select"
-                    v-model="note.select">
-            <option v-for="option in options" :key="option.value" :class="[option.green ?'green':'', option.yellow ?'yellow':'', option.red ?'red':'', ]">
-                {{ option.text }}
-            </option>
+            
+            <select @change="selected" v-model="note.select">
+                <option v-for="item in note.priority" :value="item" :key="item.id" :class="item.class">
+                {{ item.name }}
+                </option>
             </select>
-            <span 
-            :class="{
-            'greenS': note.select === 'Стандартная',
-            'yellowS': note.select === 'Важная',
-            'redS': note.select === 'Очень важная',
-            }" 
-            class="select">{{ note.select }}</span>
+            <p :class="note.select.class">
+                {{note.select.name}}
+            </p>
             <button class = "btn btnPrimary" @click = "addNote">New note</button>
         </div>
 
@@ -29,35 +24,13 @@ export default {
         note:{
             type: Object,
             required: true,
-        }
+        },
+        selected:{
+            type: Array,
+            required: false
+        },
     },
-     data() {
-            return {
-            options: [
-            { 
-                text: 'Стандартная', 
-                value: 'А', 
-                green: true,
-                yellow: false,
-                red: false,
-            },
-            { 
-                text: 'Важная', 
-                value: 'Б',
-                green: false,
-                yellow: true,
-                red: false,
-            },
-            { 
-                text: 'Очень важная', 
-                value: 'В', 
-                green: false,
-                yellow: false,
-                red: true,
-            }
-            ]
-                }
-    },
+
     methods: {
         addNote(){
             this.$emit('addNote', this.note)

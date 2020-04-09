@@ -53,11 +53,17 @@ export default {
                 title: 'Notes App',
                 search: '',
                 message: null,
-                grid:true,
-                selected: '',
+                grid: true,
+                select: '',
                 note : {
                     title: '',
-                    description: '',
+                    description: '', 
+                    select: 'Important',
+                    priority: [
+                        {name: 'Very important', class: 'red', id: 1},
+                        {name: 'Important', class: 'yellow', id: 2},
+                        {name: 'Standarts',  class: 'green', id: 3},
+                    ],
                 },
                 notes: [
                     {
@@ -97,7 +103,7 @@ export default {
   },
    methods: {
                 addNote(){
-                    let {title, description,select}=this.note
+                    let {title, description, select} = this.note
 
                     if (title === '')
                     {
@@ -113,13 +119,13 @@ export default {
                     })
                     this.note.title = '',
                     this.note.description = '',
-                    this.message = null;
-                    this.note.select= ''
+                    this.note.priority= '',
+                    this.message = null
                 },
                 removeNote(index){
                     this.notes.splice(index, 1)
                 },
-               
+
             },
 }
 </script>

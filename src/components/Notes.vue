@@ -1,14 +1,11 @@
 <template>
      <div class="notes">
-            <div class="note" 
-                 :class="{
-                        'full': !grid,
-                        'greenS': note.select === 'Стандартная',
-                        'yellowS': note.select === 'Важная',
-                        'redS': note.select === 'Очень важная',
-                        }"
+            <div class="note"
+             
+                 :class="[{full: !grid}, [note.select]]"
                         v-for="note in notes" :key="note.id">
                     <div class="note-header">
+                    <p>{{addNotePriotity}}</p>
                     <div class="note-top">
                         <div @dblclick="editTitleNote(note)">
                         <div v-show="!note.edit_mode_title">{{ note.title }}</div>
@@ -44,7 +41,11 @@ export default {
         },
         selected:{
             type: Array,
-            required: true
+            required: false
+        },
+        select:{
+            type: Array,
+            required: false
         }
     },
     methods:{
@@ -64,6 +65,9 @@ export default {
         saveNoteDescription: function (note) {
                 note.edit_mode_desc = false;
         },
+        addNotePriotity: function(){
+            return this.note.select;
+        }
     }
 }
 </script>
