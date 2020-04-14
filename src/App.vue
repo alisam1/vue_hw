@@ -54,31 +54,35 @@ export default {
                 search: '',
                 message: null,
                 grid: true,
-                select: '',
+                selected: "Standarts",
+                select: "A",
                 note : {
                     title: '',
                     description: '', 
-                    select: 'Important',
+                    select: '',
                     priority: [
-                        {name: 'Very important', class: 'red', id: 1},
-                        {name: 'Important', class: 'yellow', id: 2},
-                        {name: 'Standarts',  class: 'green', id: 3},
-                    ],
-                },
+                        { name: "Very important", class: "red", value: 'A', id: 1 },
+                        { name: "Important", class: "yellow", value: 'B', id: 2 },
+                        { name: "Standarts", class: "green", value: 'C', id: 3 }
+                        ]
+                    },
                 notes: [
                     {
                         title: 'First Note',
                         description: 'Description for first note',
+                        select: 'green',
                         date: new Date(Date.now()).toLocaleString()
                     },
                     {
                         title: 'Second Note',
                         description: 'Description for second note',
+                        select: 'red',
                         date: new Date(Date.now()).toLocaleString()
                     },
                     {
                         title: 'Third Note',
                         description: 'Description for third note',
+                        select: 'yellow',
                         date: new Date(Date.now()).toLocaleString()
                     }
                 ]
@@ -119,7 +123,7 @@ export default {
                     })
                     this.note.title = '',
                     this.note.description = '',
-                    this.note.priority= '',
+                    this.note.select= this.note.select.class,
                     this.message = null
                 },
                 removeNote(index){

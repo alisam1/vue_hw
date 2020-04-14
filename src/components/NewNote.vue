@@ -6,13 +6,8 @@
             <textarea v-model ="note.description"></textarea>
             
             <select @change="selected" v-model="note.select">
-                <option v-for="item in note.priority" :value="item" :key="item.id" :class="item.class">
-                {{ item.name }}
-                </option>
+               <option v-for="(item, index) in note.priority" :value="item" :key="index">{{ item.name }}</option>
             </select>
-            <p :class="note.select.class">
-                {{note.select.name}}
-            </p>
             <button class = "btn btnPrimary" @click = "addNote">New note</button>
         </div>
 
@@ -34,7 +29,7 @@ export default {
     methods: {
         addNote(){
             this.$emit('addNote', this.note)
-        },
+        }
     }
 
     
@@ -53,6 +48,7 @@ export default {
 {
     width: 200px;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 .new-note span

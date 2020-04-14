@@ -1,11 +1,10 @@
 <template>
      <div class="notes">
             <div class="note"
-             
-                 :class="[{full: !grid}, [note.select]]"
-                        v-for="note in notes" :key="note.id">
+                 v-for="note in notes" :key="note.id"
+                 :class="[{full: !grid}, note.select.class]"
+                 >
                     <div class="note-header">
-                    <p>{{addNotePriotity}}</p>
                     <div class="note-top">
                         <div @dblclick="editTitleNote(note)">
                         <div v-show="!note.edit_mode_title">{{ note.title }}</div>
@@ -44,9 +43,9 @@ export default {
             required: false
         },
         select:{
-            type: Array,
+            type: String,
             required: false
-        }
+        },
     },
     methods:{
         removeNote(index){
@@ -65,8 +64,9 @@ export default {
         saveNoteDescription: function (note) {
                 note.edit_mode_desc = false;
         },
-        addNotePriotity: function(){
-            return this.note.select;
+         currentStatus(){
+                    let status = this.note.select.class;
+                    console.log(status)
         }
     }
 }
@@ -101,15 +101,20 @@ export default {
 
 .green 
 {
-    color: green;
+     box-shadow: 0 4px 14px rgba(25, 227, 35, 0.5);
 }
 
 .yellow 
 {
-    color: yellow;
+     box-shadow: 0 4px 14px rgba(227, 197, 25, 0.5);
 }
 
 .red
+{
+   box-shadow: 0 4px 14px rgba(227, 25, 25, 0.5);
+}
+
+.note-header .red .note
 {
     color: red;
 }
@@ -179,31 +184,6 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-
-.greenS
-{   
-    border: 2px solid #008000;
-    color: #444;
-    font-weight: 500;
-}
-
-.yellowS
-{
-    border: 2px solid #FFD700;
-    color: #444;
-    font-weight: 500;
-}
-
-
-.redS
-{
-    border: 2px solid #FF0000;
-    color: #444;
-    font-weight: 500;
-}
-
-
-
 
 .note-top
 {
